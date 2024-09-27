@@ -1,54 +1,54 @@
-name: Deploy Vite Project to GitHub Pages
+# name: Deploy Vite Project to GitHub Pages
 
-on:
-  push:
-    branches:
-      - todo  # Change to your deployment branch
+# on:
+#   push:
+#     branches:
+#       - todo  # Change to your deployment branch
 
-jobs:
-  build:
-    runs-on: ubuntu-latest  # Assuming you only want to build on Ubuntu for simplicity
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest  # Assuming you only want to build on Ubuntu for simplicity
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Ensures full history is cloned
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # Ensures full history is cloned
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.0'  # Adjust the Ruby version as necessary
+#       - name: Setup Ruby
+#         uses: ruby/setup-ruby@v1
+#         with:
+#           ruby-version: '3.0'  # Adjust the Ruby version as necessary
 
-      - name: Install Jekyll and dependencies
-        run: |
-          gem install bundler
-          bundle install
+#       - name: Install Jekyll and dependencies
+#         run: |
+#           gem install bundler
+#           bundle install
 
-      # Check if the docs directory exists before building Jekyll
-      - name: Verify docs directory
-        run: |
-          if [ ! -d "./docs" ]; then
-            echo "Error: docs directory does not exist."
-            exit 1
-          fi
+#       # Check if the docs directory exists before building Jekyll
+#       - name: Verify docs directory
+#         run: |
+#           if [ ! -d "./docs" ]; then
+#             echo "Error: docs directory does not exist."
+#             exit 1
+#           fi
 
-      - name: Build Jekyll site
-        run: |
-          bundle exec jekyll build --source ./docs --destination ./docs/_site
+#       - name: Build Jekyll site
+#         run: |
+#           bundle exec jekyll build --source ./docs --destination ./docs/_site
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '20'
 
-      - name: Install dependencies and build Vite project
-        run: |
-          npm install
-          npm run build
+#       - name: Install dependencies and build Vite project
+#         run: |
+#           npm install
+#           npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./dist
