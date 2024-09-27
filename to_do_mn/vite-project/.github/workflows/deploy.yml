@@ -1,37 +1,27 @@
-name: Deploy Vite Project to GitHub Pages
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - todo  # Change to your deployment branch
+      - main
 
 jobs:
-  deploy:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  build:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Ensures full history is cloned
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          node-version: '20'
+          ruby-version: '3.0'  # Specify your Ruby version
 
-      - name: Install dependencies and build
+      - name: Install dependencies
         run: |
-          npm install
-          npm run build
+          bundle install
 
-      - name: Deploy to GitHub Pages
-        if: matrix.os == 'ubuntu-latest'  # Deploy only from Ubuntu
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+      - name: Build site
+        run: |
+          bundle exec jekyll build
