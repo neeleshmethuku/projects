@@ -19,17 +19,17 @@ jobs:
         with:
           fetch-depth: 0  # Ensures full history is cloned
 
+      - name: List directory contents
+        run: ls -R  # Print directory structure for debugging
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: List directory contents
-        run: ls -R  # Print directory structure for debugging
-
       - name: Install dependencies and build
         run: |
-          cd some-folder/project  # Adjust this path as necessary
+          cd some-folder/project  # Adjust this path after you find the correct structure
           npm install
           npm run build
 
