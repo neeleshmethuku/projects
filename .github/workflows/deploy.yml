@@ -24,9 +24,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: List directory contents
+        run: ls -R  # Print directory structure for debugging
+
       - name: Install dependencies and build
         run: |
-          cd project  # Change to the correct directory if package.json is inside 'project'
+          cd some-folder/project  # Adjust this path as necessary
           npm install
           npm run build
 
