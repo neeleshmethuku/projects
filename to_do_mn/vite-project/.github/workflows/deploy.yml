@@ -1,37 +1,37 @@
-name: Deploy Vite Project to GitHub Pages
+# name: Deploy Vite Project to GitHub Pages
 
-on:
-  push:
-    branches:
-      - todo  # Change to your deployment branch
+# on:
+#   push:
+#     branches:
+#       - todo  # Change to your deployment branch
 
-jobs:
-  deploy:
-    runs-on: ${{ matrix.os }}
+# jobs:
+#   deploy:
+#     runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest, windows-latest, macos-latest]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Ensures full history is cloned
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # Ensures full history is cloned
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '20'
 
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
+#       - name: Install dependencies and build
+#         run: |
+#           npm install
+#           npm run build
 
-      - name: Deploy to GitHub Pages
-        if: matrix.os == 'ubuntu-latest'  # Deploy only from Ubuntu
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+#       - name: Deploy to GitHub Pages
+#         if: matrix.os == 'ubuntu-latest'  # Deploy only from Ubuntu
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./dist
