@@ -6,12 +6,8 @@ on:
       - todo  # Change to your deployment branch
 
 jobs:
-  deploy:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  build:
+    runs-on: ubuntu-latest  # Assuming you only want to build on Ubuntu for simplicity
 
     steps:
       - name: Checkout code
@@ -19,18 +15,31 @@ jobs:
         with:
           fetch-depth: 0  # Ensures full history is cloned
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # Adjust the Ruby version as necessary
+
+      - name: Install Jekyll and dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build Jekyll site
+        run: |
+          bundle exec jekyll build
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install dependencies and build
+      - name: Install dependencies and build Vite project
         run: |
           npm install
           npm run build
 
       - name: Deploy to GitHub Pages
-        if: matrix.os == 'ubuntu-latest'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
